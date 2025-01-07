@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  frontend:
+    build: 
+      context: ../frontend
+    ports:
+      -"3000:80"
+    environment:
+      - REACT_API_URL=${API_URL}
+
+  backend:
+    build:
+      context: ../backend
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    ports:
+      - "3001:3001"
+  mysql:
+    image: mysql:8
+    container_name: mysql_container
+  environment:
+    MYSQ_ROOT_PASSWORD: ${DB_PASSWORD}
+    MYSQL_DATABASE: ${DB_NAME}
+    MYSQL_USER: ${DB_USER}
+    MYSQL_PASSWORD: ${DB_PASSWORD}
+
+  ports:
+    - "3306-3306"
+  vloumes:
+    - mysql-data: /var/lib/mysql
+
+vloumes:
+  mysql-data:
+  
