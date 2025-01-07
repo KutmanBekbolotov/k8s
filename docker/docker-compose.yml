@@ -5,7 +5,7 @@ services:
     build: 
       context: ../frontend
     ports:
-      -"3000:80"
+      - "3001:80"
     environment:
       - REACT_API_URL=${API_URL}
 
@@ -19,21 +19,20 @@ services:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
     ports:
-      - "3001:3001"
+      - "3000:3000"
+
   mysql:
     image: mysql:8
     container_name: mysql_container
-  environment:
-    MYSQ_ROOT_PASSWORD: ${DB_PASSWORD}
-    MYSQL_DATABASE: ${DB_NAME}
-    MYSQL_USER: ${DB_USER}
-    MYSQL_PASSWORD: ${DB_PASSWORD}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3306:3306"  
+    volumes:
+      - mysql-data:/var/lib/mysql
 
-  ports:
-    - "3306-3306"
-  vloumes:
-    - mysql-data: /var/lib/mysql
-
-vloumes:
-  mysql-data:
-  
+volumes:
+  mysql-data:  
